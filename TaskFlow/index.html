@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,150 +8,148 @@
 
     <link rel="stylesheet" href="../TaskFlow/css/styles.css">
 </head>
+
 <body>
+    <main>
+        <!-- CONTENEDOR PRINCIPAL DE LA APP -->
+        <div class="app-container" id="app">
 
-<!-- CONTENEDOR PRINCIPAL DE LA APP -->
-<div class="app-container" id="app">
+            <!-- CONTENEDOR CENTRADO -->
+            <div class="main-content">
 
-    <!-- CONTENEDOR CENTRADO -->
-    <div class="main-content">
+                <!-- HEADER -->
+                <header class="app-header">
 
-        <!-- HEADER -->
-        <header class="app-header">
+                    <!-- PARTE SUPERIOR DEL HEADER -->
+                    <div class="header-top">
 
-            <!-- PARTE SUPERIOR DEL HEADER -->
-            <div class="header-top">
+                        <!-- LOGO + TITULO -->
+                        <div class="logo-area">
+                            <div class="logo-icon">*</div>
 
-                <!-- LOGO + TITULO -->
-                <div class="logo-area">
-                    <div class="logo-icon">✔</div>
+                            <div class="logo-text">
+                                <h1 class="app-title">TaskFlow</h1>
+                                <p class="app-subtitle">Gestor de tareas colaborativo</p>
+                            </div>
+                        </div>
 
-                    <div class="logo-text">
-                        <h1 class="app-title">TaskFlow</h1>
-                        <p class="app-subtitle">Gestor de tareas colaborativo</p>
+                        <!-- BOTÓN MODO OSCURO -->
+                        <button class="dark-mode-button" id="darkModeToggle">*</button>
+
                     </div>
-                </div>
 
-                <!-- BOTÓN MODO OSCURO -->
-                <button class="dark-mode-button" id="darkModeToggle">
-                    🌙
-                </button>
+                    <!-- ESTADÍSTICAS -->
+                    <div class="stats-section">
+
+                        <div class="stat-card">
+                            <p class="stat-label">Total</p>
+                            <h3 class="stat-number" id="statTotal">0</h3>
+                        </div>
+
+                        <div class="stat-card">
+                            <p class="stat-label">Pendientes</p>
+                            <h3 class="stat-number pending" id="statPendientes">0</h3>
+                        </div>
+
+                        <div class="stat-card">
+                            <p class="stat-label">En Proceso</p>
+                            <h3 class="stat-number in-progress" id="statEnProceso">0</h3>
+                        </div>
+
+                        <div class="stat-card">
+                            <p class="stat-label">Completadas</p>
+                            <h3 class="stat-number completed" id="statCompletadas">0</h3>
+                        </div>
+
+                    </div>
+                </header>
+
+                <!-- FORMULARIO DE TAREAS -->
+                <section class="task-form-section">
+
+                    <h2 class="section-title">Crear Nueva Tarea</h2>
+
+                    <form class="task-form" id="taskForm">
+
+                        <div class="form-field">
+                            <label for="titulo">Título *</label>
+                            <input type="text" id="titulo" placeholder="Ej: Revisar documentación" required>
+                            <p class="error-message" id="tituloError"></p>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="descripcion">Descripción *</label>
+                            <textarea id="descripcion" rows="3" placeholder="Describe la tarea..." required></textarea>
+                            <p class="error-message" id="descripcionError"></p>
+                        </div>
+
+                        <div class="form-field">
+                            <label for="prioridad">Prioridad</label>
+                            <select id="prioridad">
+                                <option value="baja">Baja</option>
+                                <option value="media" selected>Media</option>
+                                <option value="alta">Alta</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="submit-task-button">*Crear Tarea</button>
+
+                    </form>
+                </section>
+
+                <!-- FILTROS -->
+                <section class="filters-section">
+
+                    <h2 class="section-title">Filtros</h2>
+
+                    <div class="filters-container">
+
+                        <div class="filter-field">
+                            <label for="filterEstado">Estado</label>
+                            <select id="filterEstado">
+                                <option value="todas">Todas</option>
+                                <option value="pendiente">Pendientes</option>
+                                <option value="en-proceso">En Proceso</option>
+                                <option value="completada">Completadas</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-field">
+                            <label for="filterPrioridad">Prioridad</label>
+                            <select id="filterPrioridad">
+                                <option value="todas">Todas</option>
+                                <option value="alta">Alta</option>
+                                <option value="media">Media</option>
+                                <option value="baja">Baja</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- LISTA DE TAREAS -->
+                <section class="tasks-section">
+
+                    <h2 class="section-title" id="taskListTitle">Tareas (0)</h2>
+
+                    <div class="task-list" id="taskList">
+                        <!-- tareas dinámicas -->
+                    </div>
+
+                    <div class="empty-message" id="emptyMessage">
+                        <p>No hay tareas todavía</p>
+                    </div>
+
+                    <div class="no-results-message" id="noResultsMessage">
+                        <p>No hay tareas que coincidan con los filtros</p>
+                    </div>
+
+                </section>
 
             </div>
-
-            <!-- ESTADÍSTICAS -->
-            <div class="stats-section">
-
-                <div class="stat-card">
-                    <p class="stat-label">Total</p>
-                    <h3 class="stat-number" id="statTotal">0</h3>
-                </div>
-
-                <div class="stat-card">
-                    <p class="stat-label">Pendientes</p>
-                    <h3 class="stat-number pending" id="statPendientes">0</h3>
-                </div>
-
-                <div class="stat-card">
-                    <p class="stat-label">En Proceso</p>
-                    <h3 class="stat-number in-progress" id="statEnProceso">0</h3>
-                </div>
-
-                <div class="stat-card">
-                    <p class="stat-label">Completadas</p>
-                    <h3 class="stat-number completed" id="statCompletadas">0</h3>
-                </div>
-
-            </div>
-        </header>
-
-        <!-- FORMULARIO DE TAREAS -->
-        <section class="task-form-section">
-
-            <h2 class="section-title">Crear Nueva Tarea</h2>
-
-            <form class="task-form" id="taskForm">
-
-                <div class="form-field">
-                    <label for="titulo">Título *</label>
-                    <input type="text" id="titulo" placeholder="Ej: Revisar documentación" required>
-                    <p class="error-message" id="tituloError"></p>
-                </div>
-
-                <div class="form-field">
-                    <label for="descripcion">Descripción *</label>
-                    <textarea id="descripcion" rows="3" placeholder="Describe la tarea..." required></textarea>
-                    <p class="error-message" id="descripcionError"></p>
-                </div>
-
-                <div class="form-field">
-                    <label for="prioridad">Prioridad</label>
-                    <select id="prioridad">
-                        <option value="baja">Baja</option>
-                        <option value="media" selected>Media</option>
-                        <option value="alta">Alta</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="submit-task-button">
-                    ➕ Crear Tarea
-                </button>
-
-            </form>
-        </section>
-
-        <!-- FILTROS -->
-        <section class="filters-section">
-
-            <h2 class="section-title">Filtros</h2>
-
-            <div class="filters-container">
-
-                <div class="filter-field">
-                    <label for="filterEstado">Estado</label>
-                    <select id="filterEstado">
-                        <option value="todas">Todas</option>
-                        <option value="pendiente">Pendientes</option>
-                        <option value="en-proceso">En Proceso</option>
-                        <option value="completada">Completadas</option>
-                    </select>
-                </div>
-
-                <div class="filter-field">
-                    <label for="filterPrioridad">Prioridad</label>
-                    <select id="filterPrioridad">
-                        <option value="todas">Todas</option>
-                        <option value="alta">Alta</option>
-                        <option value="media">Media</option>
-                        <option value="baja">Baja</option>
-                    </select>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- LISTA DE TAREAS -->
-        <section class="tasks-section">
-
-            <h2 class="section-title" id="taskListTitle">Tareas (0)</h2>
-
-            <div class="task-list" id="taskList">
-                <!-- tareas dinámicas -->
-            </div>
-
-            <div class="empty-message" id="emptyMessage">
-                <p>No hay tareas todavía</p>
-            </div>
-
-            <div class="no-results-message" id="noResultsMessage">
-                <p>No hay tareas que coincidan con los filtros</p>
-            </div>
-
-        </section>
-
-    </div>
-</div>
-
-<script src="../TaskFlow/js/app.js"></script>
+        </div>
+    </main>
+    <script src="../TaskFlow/js/app.js"></script>
 </body>
+
 </html>
