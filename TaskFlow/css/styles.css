@@ -94,7 +94,8 @@ body {
 
 /* =========================
    modo oscuro
-===========================*/
+
+/* modo oscuro */
 
 boby.dark-mode {
     --background: #0f172a;
@@ -164,7 +165,7 @@ body.dark-mode .final  {
 }
 
 body.dark-mode .stat-label  {
-    color: #f8fafc;
+    color: #000000;
 }
 
 body.dark-mode input {
@@ -191,7 +192,6 @@ body.dark-mode select {
 
 /* =========================
    Stats cards
-==========================*/
 body.dark-mode .stat-card {
     background: 
     linear-gradient(135deg,rgba(170, 169, 169, 0.301))
@@ -201,9 +201,9 @@ body.dark-mode .task-form-section  {
     background: 
     linear-gradient(135deg,rgba(170, 169, 169, 0.301))
 }
+
 /* =========================
-   Estadisticas
- =======================*/
+   Estadisticas */
 
 .stats-section {
     display: grid;
@@ -241,8 +241,7 @@ body.dark-mode .task-form-section  {
 }
 
 /* =========================
-   sección 
-=========================*/
+   sección */
 
 section {
     margin-bottom: 2rem;
@@ -259,8 +258,7 @@ section {
 }
 
 /* =========================
-   Formulario
-===========================*/
+   Formulario */
 
 .form-field {
     margin-bottom: 1.2rem;
@@ -395,8 +393,7 @@ select:focus {
 
 
 /* =========================
-   Boton crear tarea
-==========================*/
+   Boton crear tarea */
 
 .submit-task-button {
     width: 100%;
@@ -419,8 +416,7 @@ select:focus {
 }
 
 /* =========================
-   Filtros
-==========================*/
+   Filtros */
 
 .filters-container {
     display: grid;
@@ -430,8 +426,8 @@ select:focus {
 }
 
 /* =========================
-   Lista de tareas
-==========================*/
+   Lista de tareas */
+
 
 .toast {
     min-width: 300px;
@@ -450,10 +446,8 @@ select:focus {
 }
 
 
-
 /* =========================
-   Lista de tareas
-==========================*/
+   Lista de tareas*/
 
 .task-list {
     display: grid;
@@ -515,11 +509,6 @@ body.dark-mode .btn-delete:hover {
     section {
         padding: 1.5rem;
     }
-}
-
-/* =====================
-    Animaciones
-===================== */
 
 @keyframes fadeln {
     from{
@@ -545,4 +534,5 @@ body.dark-mode .btn-delete:hover {
 
 .shake {
     animation: shake 0.3s ease;
+}
 }
