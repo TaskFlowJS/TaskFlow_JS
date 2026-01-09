@@ -22,6 +22,8 @@ darkModeToggle.addEventListener('click', () => {
         darkModeToggle.textContent = '🌙';
     }
 });
+
+/* Form validations errors  */
 const title = document.getElementById('titulo');
 const description = document.getElementById('descripcion');
 const titleError = document.getElementById('tituloError');
@@ -68,11 +70,12 @@ form.addEventListener ('submit', (e) => {
     }
 
     // ✅ Éxito → Toast de éxito
-    e.preventDefault(); // quítalo si vas a enviar a backend
+    e.preventDefault();
     showToast("Success", "Task created successfully", "success");
 
-    // form.submit(); ← si luego lo conectas a backend
 })
+
+// Errors notifications //
 
 function showToast(title, message, type = "success") {
     const toastElement = document.getElementById("formToast");
