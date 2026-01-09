@@ -26,6 +26,7 @@
 body {
     background: linear-gradient(135 deg, #eef2ff, #fdf2f8);
     color : var(--text-main);
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* =========================
@@ -83,8 +84,25 @@ body {
 
 }
 
-/* =========================
-   modo oscuro
+
+/* modo oscuro */
+
+boby.dark-mode {
+    --background: #0f172a;
+    --card-bg: #1e293b;
+    --text-main: white;
+    --text-muted: #94a3b8;
+}
+
+body.dark-mode {
+    background: 
+    linear-gradient(135deg, #020617, #0f172a);
+}
+
+body.dark-mode .dark-mode-button {
+    background: #1e293b;
+    color: white;
+}
 
 .dark-mode-button {
     background: white;
@@ -101,8 +119,70 @@ body {
     transform: scale(1.1);
 }
 
+
+body.dark-mode .app-title{
+    color: #f8fafc;
+}
+
+body.dark-mode h2  {
+    color: #f8fafc;
+}
+
+body.dark-mode label  {
+    color: #f8fafc;
+}
+
+body.dark-mode .filters-section  {
+    background: 
+    linear-gradient(135deg,rgba(170, 169, 169, 0.301))
+}
+
+body.dark-mode .tasks-section  {
+    background: 
+    linear-gradient(135deg,rgba(170, 169, 169, 0.301))
+}
+
+body.dark-mode .final  {
+    color: #f8fafc;
+}
+
+body.dark-mode .stat-label  {
+    color: #000000;
+}
+
+body.dark-mode input {
+    background: #a9acb1;
+    color: #000000;
+    border: none;
+}
+
+body.dark-mode textarea {
+    background: #a9acb1;
+    color: #000000;
+    border: none;
+}
+
+body.dark-mode select {
+    background: #a9acb19d;
+    color: #f8fafc;
+    border: none;
+}
+
 /* =========================
-   Estadisticas
+   Stats cards
+=========================*/
+body.dark-mode .stat-card {
+    background: 
+    linear-gradient(135deg,rgba(170, 169, 169, 0.301))
+}
+
+body.dark-mode .task-form-section  {
+    background: 
+    linear-gradient(135deg,rgba(170, 169, 169, 0.301))
+}
+
+/* =========================
+   Estadisticas */
 
 .stats-section {
     display: grid;
@@ -140,7 +220,7 @@ body {
 }
 
 /* =========================
-   sección 
+   sección */
 
 section {
     margin-bottom: 2rem;
@@ -157,7 +237,7 @@ section {
 }
 
 /* =========================
-   Formulario
+   Formulario */
 
 .form-field {
     margin-bottom: 1.2rem;
@@ -185,6 +265,12 @@ select:focus {
     border-color: var(--primary);
 }
 
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
 .error-input {
     border: 2px solid red;
     border-color: rgb(255, 82, 82) !important;
@@ -203,7 +289,7 @@ select:focus {
 }
 
 /* =========================
-   Boton crear tarea
+   Boton crear tarea */
 
 .submit-task-button {
     width: 100%;
@@ -215,6 +301,7 @@ select:focus {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
     transition: var(--background) 0.2s ease, transform 0.2s ease;
 }
 
@@ -225,7 +312,7 @@ select:focus {
 }
 
 /* =========================
-   Filtros
+   Filtros */
 
 .filters-container {
     display: grid;
@@ -234,6 +321,8 @@ select:focus {
     margin-bottom: 1.5rem;
 }
 
+/* =========================
+   Lista de tareas */
 
 
 .toast {
@@ -253,9 +342,8 @@ select:focus {
 }
 
 
-
 /* =========================
-   Lista de tareas
+   Lista de tareas*/
 
 .task-list {
     display: grid;
@@ -263,6 +351,7 @@ select:focus {
     gap: 1.5rem;
 }
 
+.empty-message,
 .empty.message,
 .no-results-message {
     text-align: center;

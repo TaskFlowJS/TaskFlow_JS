@@ -1,3 +1,29 @@
+/* Modo Oscuro */
+
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+// Verificar si el modo oscuro está activado en el almacenamiento local
+if (localStorage.getItem('darkMode') === 'enabled') {
+    body.classList.add('dark-mode');
+    darkModeToggle.checked = true;
+}
+
+// Alternar el modo oscuro al hacer clic en el interruptor
+
+darkModeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+
+    if(body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+        darkModeToggle.textContent = '☀️';
+    }   else {
+        localStorage.setItem('darkMode', 'disabled');
+        darkModeToggle.textContent = '🌙';
+    }
+});
+
+/* Form validations errors  */
 const title = document.getElementById('titulo');
 const description = document.getElementById('descripcion');
 const titleError = document.getElementById('tituloError');
@@ -36,19 +62,20 @@ form.addEventListener ('submit', (e) => {
         isValid = false;
     } 
 
-    // ❌ Error → Toast de error
+    // Toast de error
     if (!isValid) {
         e.preventDefault();
         showToast("Error", "Please fix the form errors", "error");
         return;
     }
 
-    // ✅ Éxito → Toast de éxito
-    e.preventDefault(); // quítalo si vas a enviar a backend
+    // Toast de éxito
+    e.preventDefault();
     showToast("Success", "Task created successfully", "success");
 
-    // form.submit(); ← si luego lo conectas a backend
 })
+
+// Errors notifications //
 
 function showToast(title, message, type = "success") {
     const toastElement = document.getElementById("formToast");
@@ -77,4 +104,3 @@ function showToast(title, message, type = "success") {
 
     toast.show();
 }
-
