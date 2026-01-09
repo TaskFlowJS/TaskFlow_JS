@@ -11,6 +11,10 @@
     --text-muted: #6b7280;
     --border-radius: 16px;
     --shadow: 0 10px 25px rgba(0,0,0,0.08);
+    --transition: all 0.3s ease;
+    --shadow-Ig: 0 10px 15px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-sm: 0 2px 4px 
 }
 
 /* =========================
@@ -84,6 +88,12 @@ body {
 
 }
 
+.card-boby, .color {
+    color: var(--text-main)
+}
+
+/* =========================
+   modo oscuro
 
 /* modo oscuro */
 
@@ -132,6 +142,14 @@ body.dark-mode label  {
     color: #f8fafc;
 }
 
+body.dark-mode h5 {
+    color: #f8fafc;
+}
+
+body.dark-mode .color {
+    color: #f8fafc;
+}
+
 body.dark-mode .filters-section  {
     background: 
     linear-gradient(135deg,rgba(170, 169, 169, 0.301))
@@ -156,6 +174,10 @@ body.dark-mode input {
     border: none;
 }
 
+body.dark-mode .card-body {
+    background: #1f2937;
+}
+
 body.dark-mode textarea {
     background: #a9acb1;
     color: #000000;
@@ -170,7 +192,6 @@ body.dark-mode select {
 
 /* =========================
    Stats cards
-=========================*/
 body.dark-mode .stat-card {
     background: 
     linear-gradient(135deg,rgba(170, 169, 169, 0.301))
@@ -288,6 +309,89 @@ select:focus {
     display: block;
 }
 
+/* ==========================================
+   ICONOS DE ESTADO
+   ========================================== */
+
+.estado-icon {
+    font-size: 1.25rem;
+}
+
+.icon-pendiente {
+    color: #ffc107;
+}
+
+.icon-en-proceso {
+    color: #0d6efd;
+}
+
+.icon-completada {
+    color: #198754;
+}
+/* ==========================================
+   TARJETAS DE TAREAS
+   ========================================== */
+
+.task-card {
+    border-left: 8px solid;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.task-card.border-pendiente {
+    border-left-color: #ffc107;
+}
+
+.task-card.border-en-proceso {
+    border-left-color: #0d6efd;
+}
+
+.task-card.border-completada {
+    border-left-color: #198754;
+    opacity: 0.75;
+}
+
+.task-card.completada .task-title,
+.task-card.completada .task-description {
+    text-decoration: line-through;
+}
+
+/* ==========================================
+   BADGES DE PRIORIDAD
+   ========================================== */
+
+.badge-prioridad {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    border: 1px solid;
+}
+
+.badge-alta {
+    background-color: #fee;
+    color: #dc3545;
+    border-color: #fcc;
+}
+
+.badge-media {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeaa7;
+}
+
+.badge-baja {
+    background-color: #d1f2eb;
+    color: #0f5132;
+    border-color: #a7e9d7;
+}
+
+
 /* =========================
    Boton crear tarea */
 
@@ -360,6 +464,43 @@ select:focus {
     margin-top: 2rem;
 }
 
+/* ======================
+    Boton eliminar
+====================== */
+
+.btn {
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-delete {
+    color: #dc3545;
+    background-color: #cf43513d;
+    transition: var(--transition);
+}
+
+.btn-delete:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+body.dark-mode .btn-delete:hover {
+    background-color: rgba(220, 53, 69, 0.2);
+}
+
+/*=====================
+    Responsive
+=====================*/
+
 @media (max-width: 600px) {
     .app-title {
         font-size: 2rem;
@@ -368,4 +509,30 @@ select:focus {
     section {
         padding: 1.5rem;
     }
+
+@keyframes fadeln {
+    from{
+        opacity: 0;
+        transform: translateY(20px);
+    
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.task-card {
+    animation: fadeln 0.3s ease;
+}
+
+@keyframes shake{
+    0%, 100% {transform: translateX(0)}
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.3s ease;
+}
 }
