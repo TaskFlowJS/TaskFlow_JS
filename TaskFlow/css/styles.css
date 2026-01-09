@@ -86,7 +86,6 @@ body {
 
 /* =========================
    modo oscuro
-========================= */
 
 boby.dark-mode {
     --background: #0f172a;
@@ -171,7 +170,6 @@ body.dark-mode select {
 
 /* =========================
    Stats cards
-========================= */
 body.dark-mode .stat-card {
     background: 
     linear-gradient(135deg,rgba(170, 169, 169, 0.301))
@@ -183,7 +181,8 @@ body.dark-mode .task-form-section  {
 }
 /* =========================
    Estadisticas
-========================= */
+/* =========================
+   Estadisticas
 
 .stats-section {
     display: grid;
@@ -222,7 +221,6 @@ body.dark-mode .task-form-section  {
 
 /* =========================
    sección 
-========================= */
 
 section {
     margin-bottom: 2rem;
@@ -240,7 +238,6 @@ section {
 
 /* =========================
    Formulario
-========================= */
 
 .form-field {
     margin-bottom: 1.2rem;
@@ -272,11 +269,25 @@ select:focus {
     color: red;
     font-size: 0.9rem;
     margin-top: 0.3rem;
+.error-input {
+    border: 2px solid red;
+    border-color: rgb(255, 82, 82) !important;
+    animation: shake 0.3s ease;
+}
+
+.error-text {
+    display: none;
+    color: red;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+}
+
+.error-input ~ .error-text {
+    display: block;
 }
 
 /* =========================
    Boton crear tarea
-========================= */
 
 .submit-task-button {
     width: 100%;
@@ -289,6 +300,7 @@ select:focus {
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s ease, transform 0.2s ease;
+    transition: var(--background) 0.2s ease, transform 0.2s ease;
 }
 
 .submit-task-button:hover {
@@ -299,7 +311,6 @@ select:focus {
 
 /* =========================
    Filtros
-========================= */
 
 .filters-container {
     display: grid;
@@ -310,7 +321,28 @@ select:focus {
 
 /* =========================
    Lista de tareas
-========================= */
+
+
+.toast {
+    min-width: 300px;
+}
+
+.toast-success {
+    border-left: 4px solid #198754;
+}
+
+.toast-error {
+    border-left: 4px solid #dc3545;
+}
+
+.toast-info {
+    border-left: 4px solid #0d6efd;
+}
+
+
+
+/* =========================
+   Lista de tareas
 
 .task-list {
     display: grid;
@@ -319,6 +351,7 @@ select:focus {
 }
 
 .empty-message,
+.empty.message,
 .no-results-message {
     text-align: center;
     color: var(--text-muted);
