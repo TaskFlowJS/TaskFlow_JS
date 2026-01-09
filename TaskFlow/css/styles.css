@@ -85,7 +85,6 @@ body {
 
 /* =========================
    modo oscuro
-========================= */
 
 .dark-mode-button {
     background: white;
@@ -104,7 +103,6 @@ body {
 
 /* =========================
    Estadisticas
-========================= */
 
 .stats-section {
     display: grid;
@@ -143,7 +141,6 @@ body {
 
 /* =========================
    sección 
-========================= */
 
 section {
     margin-bottom: 2rem;
@@ -161,7 +158,6 @@ section {
 
 /* =========================
    Formulario
-========================= */
 
 .form-field {
     margin-bottom: 1.2rem;
@@ -208,7 +204,6 @@ select:focus {
 
 /* =========================
    Boton crear tarea
-========================= */
 
 .submit-task-button {
     width: 100%;
@@ -231,7 +226,6 @@ select:focus {
 
 /* =========================
    Filtros
-========================= */
 
 .filters-container {
     display: grid;
@@ -262,7 +256,6 @@ select:focus {
 
 /* =========================
    Lista de tareas
-========================= */
 
 .task-list {
     display: grid;
