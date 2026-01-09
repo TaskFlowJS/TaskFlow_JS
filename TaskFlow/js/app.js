@@ -104,3 +104,170 @@ function showToast(title, message, type = "success") {
 
     toast.show();
 }
+
+// Creacion de las tarjetas de tarea 
+
+
+
+// Elementos del DOM
+const creartarea = document.getElementById('creartarea');
+const apartadotarea = document.getElementById('taskList');
+
+let idCounter = 0; 
+
+// --- MAPEO DE CLASES CSS ---
+const PRIORITY_CLASSES = {
+    'baja': 'badge-baja',
+    'media': 'badge-media', 
+    'alta': 'badge-alta' 
+};
+
+const STATUS_CLASSES = {
+    'en-proceso': 'border-en-proceso',
+    'completada': 'border-completada',
+    'pendiente': 'border-pendiente'
+};
+// -----------------------------
+
+/**
+ * Crea y renderiza una nueva tarjeta de tarea en el DOM.
+ * @param {object} tareaData - Objeto que contiene todos los datos de la tarea.
+ */
+function crear(tareaData) { 
+    const { 
+        tituloTarea, 
+        descripcionTarea, 
+        prioridadTarea, 
+        estadoTarea 
+    } = tareaData;
+    
+    // DETERMINAMOS LAS CLASSES DE CSS CON LOS COLORES A ASIGNAR
+    const priorityKey = prioridadTarea.toLowerCase(); 
+    const priorityClass = PRIORITY_CLASSES[priorityKey] || PRIORITY_CLASSES['media']; 
+        
+    // Función de formato para mostrar el texto en el badge con la primera letra en mayúscula
+    const displayPriority = prioridadTarea.charAt(0).toUpperCase() + prioridadTarea.slice(1); // Capitaliza la primera letra del valor de prioridad (ej: 'alta' se convierte en 'Alta') para que se muestre con mejor formato en el badge de la interfaz.
+        
+    const statusClass = STATUS_CLASSES[estadoTarea] || STATUS_CLASSES['pendiente']; // Busca la clase CSS asociada al estado de la tarea (ej: 'border-en-proceso') en el mapeo STATUS_CLASSES. Si no encuentra el estado, aplica la clase del estado 'pendiente' por defecto.
+        
+    const traId = `id-${idCounter}`;                        
+
+    // Contenido del select (opciones)
+    const optionsHtml = Object.keys(STATUS_CLASSES).map(statusKey => { // Obtiene un array con los nombres de los estados ('en-proceso', 'completada', 'pendiente') y comienza a iterar sobre cada uno para generar el HTML del selector.
+        const isSelected = statusKey === estadoTarea ? 'selected=""' : ''; 
+        const optionClass = STATUS_CLASSES[statusKey];         
+        const statusDisplay = statusKey.charAt(0).toUpperCase() + statusKey.slice(1).replace('-', ' '); // Formatea el texto del estado (ej: convierte 'en-proceso' a 'En proceso') para mostrarlo en la lista desplegable.
+        return `<option value="${statusKey}" ${isSelected} class="${optionClass}">${statusDisplay}</option>`;
+    }).join('');                                                // Concatena todos los elementos del array de <option> en una única cadena HTML para inyectarla en el DOM.
+
+    apartadotarea.innerHTML += `
+        <div class="col-12 col-md-6 col-lg-4 task-wrapper" id="${traId}">
+            <div class="card task-card shadow-sm ${statusClass}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge-prioridad ${priorityClass}">${displayPriority}</span>
+                        <button class="btn btn-sm btn-delete" data-task-id="${traId}"><i class="bi bi-trash"></i></button>
+                    </div>
+                    <h5 class="card-title task-title fw-bold mb-2">${tituloTarea}</h5>
+                    <p class="card-text task-description text-muted small mb-3">${descripcionTarea}</p>
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="bi estado-icon bi-exclamation-circle icon-${estadoTarea}"></i>
+                        <select class="form-select form-select-sm" data-task-id="${traId}">
+                            ${optionsHtml}
+                        </select>
+                    </div>
+                    <div class="text-muted small border-top pt-2">Creada: ${new Date().toLocaleDateString('es-ES')}</div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    idCounter++; 
+}
+
+
+// CREACION DE TAREA
+creartarea.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    const titulo = document.getElementById('titulo').value.trim();
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const prioridad = document.getElementById('prioridad').value; 
+    
+    if (!titulo || !descripcion) {
+        console.error("El título y la descripción son obligatorios.");
+        return; 
+    }
+    
+    const newtareaData = { 
+        tituloTarea: titulo,
+        descripcionTarea: descripcion,
+        prioridadTarea: prioridad,
+        estadoTarea: 'pendiente' 
+    };
+
+    crear(newtareaData); 
+    
+    // 3. Limpiar los campos del formulario
+    document.getElementById('titulo').value = '';
+    document.getElementById('descripcion').value = '';
+    document.getElementById('prioridad').value = 'media'; 
+});
+
+
+// ELIMINAR TAREA
+apartadotarea.addEventListener('click', (e) => {
+    const deleteButton = e.target.closest('.btn-delete');
+    
+    if (deleteButton) {
+        const traId = deleteButton.getAttribute('data-task-id'); 
+        
+        const tareaElement = document.getElementById(traId); 
+        
+        if (tareaElement) { 
+            tareaElement.remove(); 
+            console.log(`Tarea ${traId} eliminada.`);
+        }
+    }
+    
+    // APARTADO PARA CAMBIAR EL COLOR AL BORDER DE LA TAREA
+    const statusSelect = e.target.closest('.form-select');
+    if (statusSelect && statusSelect.dataset.taskId) {
+        const traId = statusSelect.dataset.taskId; 
+        const newStatus = statusSelect.value;
+        const tareaWrapper = document.getElementById(traId); 
+        
+        if (tareaWrapper) { 
+            // Eliminar todas las clases de estado antiguas
+            Object.values(STATUS_CLASSES).forEach(cls => {
+                tareaWrapper.querySelector('.task-card').classList.remove(cls); 
+            });
+            
+            // Agregar la nueva clase de estado
+            const newStatusClass = STATUS_CLASSES[newStatus];
+            tareaWrapper.querySelector('.task-card').classList.add(newStatusClass); 
+
+            const iconElement = tareaWrapper.querySelector('.estado-icon');
+            if (iconElement) {
+                // Remove existing icon classes (bi-exclamation-circle, icon-*)
+                iconElement.classList.remove('icon-pendiente', 'icon-en-proceso', 'icon-completada');
+                
+                // Set the appropriate icon class
+                iconElement.classList.add(`icon-${newStatus}`);
+                
+                // Optional: Change icon shape based on status
+                if (newStatus === 'completada') {
+                    iconElement.classList.remove('bi-exclamation-circle', 'bi-arrow-repeat');
+                    iconElement.classList.add('bi-check-circle-fill');
+                } else if (newStatus === 'en-proceso') {
+                    iconElement.classList.remove('bi-check-circle-fill', 'bi-exclamation-circle');
+                    iconElement.classList.add('bi-arrow-repeat');
+                } else { // pendiente
+                    iconElement.classList.remove('bi-check-circle-fill', 'bi-arrow-repeat');
+                    iconElement.classList.add('bi-exclamation-circle');
+                }
+            }
+        }
+    }
+});
+
