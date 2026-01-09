@@ -62,14 +62,14 @@ form.addEventListener ('submit', (e) => {
         isValid = false;
     } 
 
-    // ❌ Error → Toast de error
+    // Toast de error
     if (!isValid) {
         e.preventDefault();
         showToast("Error", "Please fix the form errors", "error");
         return;
     }
 
-    // ✅ Éxito → Toast de éxito
+    // Toast de éxito
     e.preventDefault();
     showToast("Success", "Task created successfully", "success");
 
@@ -104,4 +104,3 @@ function showToast(title, message, type = "success") {
 
     toast.show();
 }
-
