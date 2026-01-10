@@ -1,5 +1,24 @@
-/* Modo Oscuro */
+document.addEventListener('DOMContentLoaded', () => {
+    loadFromLocalStorage();
+});
 
+// manejo localstorage
+let task = [];
+
+function saveToLocalStorage() {
+    localStorage.setItem('task', JSON.stringify(task));
+}
+
+function loadFromLocalStorage() {
+    const data = localStorage.getItem('task');
+    if (data) {
+        task = JSON.parse(data);
+        apartadotarea.innerHTML = '';
+        task.forEach(t => crear(t));
+    }
+}
+
+/* Modo Oscuro */
 const darkModeToggle = document.getElementById('darkModeToggle');
 const body = document.body;
 
@@ -23,6 +42,7 @@ darkModeToggle.addEventListener('click', () => {
     }
 });
 
+
 /* Form validations errors  */
 const title = document.getElementById('titulo');
 const description = document.getElementById('descripcion');
@@ -31,6 +51,7 @@ const descriptionError = document.getElementById('descripcionError');
 const form = document.getElementById('taskForm');
 
 form.addEventListener ('submit', (e) => {
+    e.preventDefault();
     let isValid = true;
 
     titleError.textContent = '';
@@ -38,7 +59,7 @@ form.addEventListener ('submit', (e) => {
     title.classList.remove('error-input');
     description.classList.remove('error-input');
 
-    if (!title) {
+    if (title.value.trim() === '') {
         titleError.textContent = 'Title cant be empty';
         title.classList.add('error-input');
         isValid = false;
@@ -50,7 +71,7 @@ form.addEventListener ('submit', (e) => {
         isValid = false;
     }
 
-    if (!description) {
+    if (description.value.trim() === '') {
         descriptionError.textContent = 'Description is mandatory';
         description.classList.add ('error-input');
         isValid = false;
@@ -64,15 +85,24 @@ form.addEventListener ('submit', (e) => {
 
     // Toast de error
     if (!isValid) {
-        e.preventDefault();
         showToast("Error", "Please fix the form errors", "error");
         return;
     }
 
-    // Toast de éxito
-    e.preventDefault();
-    showToast("Success", "Task created successfully", "success");
+    // crear tarea 
+    const newtareaData = {
+        id: crypto.randomUUID(),
+        tituloTarea: title.value.trim(),
+        descripcionTarea: description.value.trim(),
+        prioridadTarea: document.getElementById('prioridad').value,
+        estadoTarea: 'pendiente'
+    }
 
+    crear(newtareaData);
+    task.push(newtareaData);
+    saveToLocalStorage();
+    form.reset();
+    showToast("Success", "Task created successfully", "success");    // Toast de éxito
 })
 
 // Errors notifications //
@@ -105,13 +135,9 @@ function showToast(title, message, type = "success") {
     toast.show();
 }
 
-
-
 // Elementos del DOM
 const creartarea = document.getElementById('creartarea');
 const apartadotarea = document.getElementById('taskList');
-
-let idCounter = 0; 
 
 // --- MAPEO DE CLASES CSS ---
 const PRIORITY_CLASSES = {
@@ -148,7 +174,7 @@ function crear(tareaData) {
         
     const statusClass = STATUS_CLASSES[estadoTarea] || STATUS_CLASSES['pendiente']; // Busca la clase CSS asociada al estado de la tarea (ej: 'border-en-proceso') en el mapeo STATUS_CLASSES. Si no encuentra el estado, aplica la clase del estado 'pendiente' por defecto.
         
-    const traId = `id-${idCounter}`;                        
+    const traId = tareaData.id;                        
 
     // Contenido del select (opciones)
     const optionsHtml = Object.keys(STATUS_CLASSES).map(statusKey => { // Obtiene un array con los nombres de los estados ('en-proceso', 'completada', 'pendiente') y comienza a iterar sobre cada uno para generar el HTML del selector.
@@ -180,54 +206,20 @@ function crear(tareaData) {
             </div>
         </div>
     `;
-    
-    idCounter++; 
 }
-
-
-// CREACION DE TAREA
-creartarea.addEventListener('click', (e) => {
-    e.preventDefault();
-    
-    const titulo = document.getElementById('titulo').value.trim();
-    const descripcion = document.getElementById('descripcion').value.trim();
-    const prioridad = document.getElementById('prioridad').value; 
-    
-    if (!titulo || !descripcion) {
-        console.error("El título y la descripción son obligatorios.");
-        return; 
-    }
-    
-    const newtareaData = { 
-        tituloTarea: titulo,
-        descripcionTarea: descripcion,
-        prioridadTarea: prioridad,
-        estadoTarea: 'pendiente' 
-    };
-
-    crear(newtareaData); 
-    
-    // 3. Limpiar los campos del formulario
-    document.getElementById('titulo').value = '';
-    document.getElementById('descripcion').value = '';
-    document.getElementById('prioridad').value = 'media'; 
-});
-
 
 // ELIMINAR TAREA
 apartadotarea.addEventListener('click', (e) => {
     const deleteButton = e.target.closest('.btn-delete');
     
     if (deleteButton) {
-        const traId = deleteButton.getAttribute('data-task-id'); 
-        
-        const tareaElement = document.getElementById(traId); 
-        
-        if (tareaElement) { 
-            tareaElement.remove(); 
-            console.log(`Tarea ${traId} eliminada.`);
-        }
+    const traId = deleteButton.dataset.taskId;
+    document.getElementById(traId)?.remove();
+
+    task = task.filter(t => t.id !== traId);
+    saveToLocalStorage();
     }
+
     
     // APARTADO PARA CAMBIAR EL COLOR AL BORDER DE LA TAREA
     const statusSelect = e.target.closest('.form-select');

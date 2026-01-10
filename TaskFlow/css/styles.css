@@ -190,8 +190,9 @@ body.dark-mode select {
     border: none;
 }
 
-/* =========================
-   Stats cards
+/* ========================= 
+   Stats cards */
+   
 body.dark-mode .stat-card {
     background: 
     linear-gradient(135deg,rgba(170, 169, 169, 0.301))
