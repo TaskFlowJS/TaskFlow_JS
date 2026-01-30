@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     
@@ -82,18 +83,90 @@
                     <div class="form-field">
                         <label for="titulo">Título *</label>
                         <input type="text" id="titulo" placeholder="Ej: Revisar documentación">
+
+                    <button class="dark-mode-button" id="darkModeToggle">
+                        <span class="moon-icon">
+                            <img src="../TaskFlow/assets/icons/moon.svg" alt="Modo oscuro">
+                        </span>
+                        <span class="sun-icon">
+                            <img src="../TaskFlow/assets/icons/moon.svg" alt="Modo claro">
+                        </span>
+                    </button>
+
+                    </button>
+                </div>
+
+                <!-- FILTROS -------------------------------------------------------------------------------------->
+                <div class="stats-section">
+                    <div class="stat-card stat-total">
+                        <div class="stat-header">
+                            <p>Total</p>
+                            <div class="stat-icon">
+                                <img src="../TaskFlow/assets/icons/all.svg" alt="">
+                            </div>
+                        </div>
+                        <h3 id="statTotal">0</h3>
+                    </div>
+
+                    <div class="stat-card stat-pendientes">
+                        <div class="stat-header">
+                            <p>Pendientes</p>
+                            <div class="stat-icon">
+                                <img src="../TaskFlow/assets/icons/pend.svg" alt="">
+                            </div>
+                        </div>
+                        <h3 id="statPendientes">0</h3>
+                    </div>
+
+                    <div class="stat-card stat-en-proceso">
+                        <div class="stat-header">
+                            <p>En proceso</p>
+                            <div class="stat-icon">
+                                <img src="../TaskFlow/assets/icons/proces.svg" alt="">
+                            </div>
+                        </div>
+                        <h3 id="statEnProceso">0</h3>
+                    </div>
+
+                    <div class="stat-card stat-completadas">
+                        <div class="stat-header">
+                            <p>Completadas</p>
+                            <div class="stat-icon">
+                                <img src="../TaskFlow/assets/icons/ok.svg" alt="">
+                            </div>
+                        </div>
+                        <h3 id="statCompletadas">0</h3>
+                    </div>
+                </div>
+            </header>
+
+            <!-- FORMULARIO --------------------------------------------------------------------------------------------->
+            <section class="form-section">
+                <h2 class="section-title">Crear Nueva Tarea</h2>
+
+                <form id="taskForm" class="task-form">
+                    <div class="form-field">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" placeholder="Escribe el Tt. ">
+
                         <p class="error-text" id="tituloError"></p>
                     </div>
 
                     <div class="form-field">
+
                         <label for="descripcion">Descripción *</label>
                         <textarea id="descripcion" rows="3" placeholder="Describe la tarea..."></textarea>
+
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" rows="5" placeholder="Describe la tarea."></textarea>
+
                         <p class="error-text" id="descripcionError"></p>
                     </div>
 
                     <div class="form-field">
                         <label for="prioridad">Prioridad</label>
                         <select id="prioridad">
+
                             <option value="baja">Baja</option>
                             <option value="media" selected>Media</option>
                             <option value="alta">Alta</option>
@@ -154,10 +227,28 @@
                     <p>No hay tareas que coincidan con los filtros</p>
                 </div>
 
+
+                    <button type="submit" class="submit-task-button">
+                        <p>Crear tarea</p>
+                    </button>
+                </form>
+            </section>
+
+            <!-- LISTA DE TAREAS ---------------------------------------------------------------------------------------->
+            <section class="tasks-section">
+                <h2 class="section-title">Tareas</h2>
+                <div id="taskList" class="task-list"></div>
+                <div id="emptyMessage" class="empty-message">
+                    <div class="empty-icon">
+                        <img src="../TaskFlow/assets/icons/done_all.svg" alt="">
+                    </div>
+                    <p>No hay tareas en gestión.</p>
+                </div>
             </section>
 
         </div>
     </div>
+
 
     <div class="toast-container position-fixed top-0 end-0 p-3">
         <div id="formToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -175,5 +266,23 @@
 
 
     <link rel="stylesheet" href="../TaskFlow/css/styles.css">
+
+
+    <!-- TOAST ----------------------------------------------------------------------------------------------------------->
+    <div id="toast" class="toast">
+        <p id="toastMessage"></p>
+    </div>
+
+    <!-- UPPER ---------------------------------------------------------------------------------------------------------->
+    <footer id="foot">
+        <div>
+            <a href="#upper"><img src="../TaskFlow/assets/icons/arrow.svg" alt="" id="upper"></a>
+        </div>
+    </footer>
+
+    <!-- SCRIPT --------------------------------------------------------------------------------------------------------->
+    <script src="../TaskFlow/js/script.js"></script>
 </body>
+
 </html>
+
